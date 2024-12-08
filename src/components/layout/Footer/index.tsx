@@ -13,22 +13,22 @@ const socialsData: SocialNetworks[] = [
   {
     id: 1,
     icon: <FaTwitter />,
-    url: "https://twitter.com",
+    url: "",
   },
   {
     id: 2,
     icon: <FaFacebookF />,
-    url: "https://facebook.com",
+    url: "",
   },
   {
     id: 3,
     icon: <FaInstagram />,
-    url: "https://instagram.com",
+    url: "",
   },
   {
     id: 4,
     icon: <FaGithub />,
-    url: "https://github.com",
+    url: "",
   },
 ];
 
