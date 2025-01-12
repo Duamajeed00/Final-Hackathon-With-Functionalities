@@ -1,46 +1,46 @@
-import {
-  newArrivalsData,
-  relatedProductData,
-  topSellingData,
-} from "@/app/page";
 import ProductListSec from "@/components/common/ProductListSec";
 import BreadcrumbProduct from "@/components/product-page/BreadcrumbProduct";
 import Header from "@/components/product-page/Header";
 import Tabs from "@/components/product-page/Tabs";
-import { Product } from "@/types/product.types";
 import { notFound } from "next/navigation";
+import { getProducts } from "@/sanity/lib/sanity";
 
-const data: Product[] = [
-  ...newArrivalsData,
-  ...topSellingData,
-  ...relatedProductData,
-];
-
-export default function ProductPage({
+export default async function ProductPage({
   params,
 }: {
   params: { slug: string[] };
 }) {
-  const productData = data.find(
-    (product) => product.id === Number(params.slug[0])
+  // Fetch all products from Sanity
+  const products = await getProducts();
+
+  // Find the product using the slug
+  const productData = products.find(
+    (product) => product.slug.current === params.slug[0]
   );
 
-  if (!productData?.title) {
+  // If the product is not found, return a 404 page
+  if (!productData) {
     notFound();
   }
+
+  // Fetch related products (for simplicity, use the first 4 products)
+  const relatedProductData = products.slice(0, 4);
 
   return (
     <main>
       <div className="max-w-frame mx-auto px-4 xl:px-0">
         <hr className="h-[1px] border-t-black/10 mb-5 sm:mb-6" />
-        <BreadcrumbProduct title={productData?.title ?? "product"} />
+        <BreadcrumbProduct title={productData?.name ?? "product"} />
         <section className="mb-11">
           <Header data={productData} />
         </section>
         <Tabs />
       </div>
       <div className="mb-[50px] sm:mb-20">
-        <ProductListSec title="You might also like" data={relatedProductData} />
+        <ProductListSec
+          title="You might also like"
+          data={relatedProductData}
+        />
       </div>
     </main>
   );

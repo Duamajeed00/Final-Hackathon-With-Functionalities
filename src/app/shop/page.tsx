@@ -1,11 +1,18 @@
 import BreadcrumbShop from "@/components/shop-page/BreadcrumbShop";
 import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
-import { FiSliders } from "react-icons/fi";
-import { newArrivalsData, relatedProductData, topSellingData } from "../page";
 import ProductCard from "@/components/common/ProductCard";
 import { Pagination, PaginationContent, PaginationItem, PaginationLink, PaginationNext, PaginationPrevious, PaginationEllipsis } from "@/components/ui/pagination";
+import { getProducts } from "@/sanity/lib/sanity";
 
-const ShopPage: React.FC = () => {
+const ShopPage = async () => {
+  // Fetch all products from Sanity
+  const products = await getProducts();
+
+  // For simplicity, split the products into new arrivals, top selling, and related products
+  const newArrivalsData = products.slice(0, 4);
+  const topSellingData = products.slice(4, 8);
+  const relatedProductData = products.slice(8, 12);
+
   return (
     <main className="pb-20">
       <div className="max-w-frame mx-auto px-4 xl:px-0">
@@ -19,7 +26,7 @@ const ShopPage: React.FC = () => {
             </div>
             <div className="flex flex-col sm:items-center sm:flex-row">
               <span className="text-sm md:text-base text-black/60 mr-3">
-                Showing 1-10 of 100 Products
+                Showing 1-10 of {products.length} Products
               </span>
               <div className="flex items-center">
                 Sort by:{" "}
@@ -38,7 +45,7 @@ const ShopPage: React.FC = () => {
           </div>
           <div className="w-full grid grid-cols-1 xs:grid-cols-2 sm:grid-cols-3 md:grid-cols-2 lg:grid-cols-3 gap-4 lg:gap-5">
             {[...relatedProductData.slice(1, 4), ...newArrivalsData.slice(1, 4), ...topSellingData.slice(1, 4)].map((product) => (
-              <ProductCard key={product.id} data={product} />
+              <ProductCard key={product._id} data={product} />
             ))}
           </div>
           <hr className="border-t-black/10" />

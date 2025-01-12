@@ -6,6 +6,9 @@ import TopNavbar from "@/components/layout/Navbar/TopNavbar";
 import Footer from "@/components/layout/Footer";
 import HolyLoader from "holy-loader";
 import Providers from "./providers";
+import { CartProvider } from "@/components/cart-context-api/CartContext";
+import { ToastContainer } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export const metadata: Metadata = {
   title: "SHOP.CO",
@@ -22,6 +25,7 @@ export default function RootLayout({
   children: React.ReactNode;
 }>) {
   return (
+    <CartProvider>
     <html lang="en">
       <body className={satoshi.className}>
         <HolyLoader color="#868686" />
@@ -29,9 +33,11 @@ export default function RootLayout({
         <Providers>
           <TopNavbar />
           {children}
+          <ToastContainer />
         </Providers>
         <Footer />
       </body>
     </html>
+    </CartProvider>
   );
 }

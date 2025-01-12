@@ -1,6 +1,6 @@
 import React from "react";
 import PhotoSection from "./PhotoSection";
-import { Product } from "@/types/product.types";
+import { Product } from "../../../../types";
 import { integralCF } from "@/styles/fonts";
 import { cn } from "@/lib/utils";
 import Rating from "@/components/ui/Rating";
@@ -22,7 +22,7 @@ const Header = ({ data }: { data: Product }) => {
               "text-2xl md:text-[40px] md:leading-[40px] mb-3 md:mb-3.5 capitalize",
             ])}
           >
-            {data.title}
+            {data.name} {/* Use `name` instead of `title` */}
           </h1>
           <div className="flex items-center mb-3 sm:mb-3.5">
             <Rating

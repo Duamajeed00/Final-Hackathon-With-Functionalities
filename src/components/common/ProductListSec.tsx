@@ -8,7 +8,7 @@ import {
   CarouselItem,
 } from "@/components/ui/carousel";
 import ProductCard from "./ProductCard";
-import { Product } from "@/types/product.types";
+import { Product } from "../../../types";
 import Link from "next/link";
 
 type ProductListSecProps = {
@@ -47,10 +47,27 @@ const ProductListSec = ({ title, data, viewAllLink }: ProductListSecProps) => {
           <CarouselContent className="mx-4 xl:mx-0 space-x-4 sm:space-x-5">
             {data.map((product) => (
               <CarouselItem
-                key={product.id}
+                key={product._id} // Use _id from Sanity instead of id
                 className="w-full max-w-[198px] sm:max-w-[295px] pl-0"
               >
-                <ProductCard data={product} />
+                <ProductCard
+                  data={{
+                    ...product,
+                    _id: product._id, // Map _id to id for compatibility
+                    srcUrl: {
+                      asset: {
+                        _ref: product.srcUrl.asset._ref,
+                        url: product.srcUrl.asset.url, // Use the URL from Sanity's image asset
+                      },
+                    },
+                    gallery: product.gallery?.map((img) => ({
+                      asset: {
+                        _ref: img.asset._ref,
+                        url: img.asset.url, // Map gallery images
+                      },
+                    })),
+                  }}
+                />
               </CarouselItem>
             ))}
           </CarouselContent>
