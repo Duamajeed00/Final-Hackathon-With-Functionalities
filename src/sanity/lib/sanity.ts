@@ -11,8 +11,9 @@ export async function getProducts(): Promise<Product[]> {
     price,
     discount,
     rating,
-    inStock
-  }[0...200]`;
+    inStock,
+    stock
+  }`;
 
   const products = await client.fetch<Product[]>(query);
   return products;

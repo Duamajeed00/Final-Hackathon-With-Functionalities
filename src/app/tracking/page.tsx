@@ -87,7 +87,7 @@ function TrackShipment() {
               <button
                 type="submit"
                 disabled={loading}
-                className="bg-[#23A6F0] text-white py-2 px-4 rounded-md hover:bg-blue-400 transition-colors disabled:bg-blue-300"
+                className="bg-black text-white py-2 px-4 rounded-md hover:bg-gray-900 transition-colors disabled:bg-blue-300"
               >
                 {loading ? "Tracking..." : "Track Shipment"}
               </button>

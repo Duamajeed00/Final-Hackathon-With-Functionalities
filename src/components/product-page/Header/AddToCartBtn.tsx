@@ -21,6 +21,7 @@ const AddToCartBtn = ({ data }: AddToCartBtnProps) => {
       quantity: data.quantity, // Use the quantity from props
       imageUrl: urlFor(data.srcUrl).url(),
       inStock: data.inStock,
+      stock: data.stock
     };
 
     addToCart(cartItem);
@@ -44,7 +45,7 @@ const AddToCartBtn = ({ data }: AddToCartBtnProps) => {
     >
       Add to Cart
     </button>
-  );
+    );
 };
 
 export default AddToCartBtn;

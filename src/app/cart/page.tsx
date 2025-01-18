@@ -30,6 +30,20 @@ const Cart = () => {
     }
 
     try {
+      for (const item of cartItems) {
+        const stockUpdateResponse = await fetch("/api/stock-update", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ productId: item.id, quantity: item.quantity }),
+        });
+
+        if (!stockUpdateResponse.ok) {
+          const { message } = await stockUpdateResponse.json();
+          alert(`Failed to update stock for ${item.name}: ${message}`);
+          return;
+        }
+      }
+
       const response = await fetch("/api/create-checkout-session", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
@@ -54,7 +68,6 @@ const Cart = () => {
       console.error("Checkout error:", error);
     }
   };
-
   return (
     <div>
       <div className="wrapper">
@@ -64,10 +77,10 @@ const Cart = () => {
               href="/cart"
               className={cn([
                 integralCF.className,
-                "text-2xl lg:text-[32px] mr-3 lg:mr-10 flex justify-center items-center mb-8",
+                "text-2xl lg:text-[32px] mr-3 lg:mr-10 flex justify-start mb-8",
               ])}
             >
-              Shopping Cart
+              Your Cart
             </Link>
             <div className="bg-white shadow-lg rounded-lg overflow-hidden">
               <table className="w-full table-auto text-left">

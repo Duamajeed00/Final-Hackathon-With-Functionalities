@@ -1,6 +1,6 @@
 export interface Product {
-  _id: string; // Use _id instead of id
-  name: string; // Use name instead of title
+  _id: string; 
+  name: string;
   slug: {
     current: string;
   };
@@ -24,6 +24,7 @@ export interface Product {
   rating: number;
   inStock: boolean;
   quantity?: number;
+  stock: number
 }
 
   export interface Review {

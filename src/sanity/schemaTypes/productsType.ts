@@ -2,27 +2,27 @@ import { TrolleyIcon } from "@sanity/icons";
 import { defineField, defineType } from "sanity";
 
 export default defineType({
-    name: "product",
-    title: "Products",
-    type: "document",
-    icon: TrolleyIcon,
-    fields: [
-      defineField({
-        name: "name",
-        title: "Product Name",
-        type: "string",
-        validation: (Rule) => Rule.required(),
-      }),
-      defineField({
-        name: "slug",
-        title: "Slug",
-        type: "slug",
-        options: {
-          source: "name",
-          maxLength: 96,
-        },
-        validation: (Rule) => Rule.required(),
-      }),
+  name: "product",
+  title: "Products",
+  type: "document",
+  icon: TrolleyIcon,
+  fields: [
+    defineField({
+      name: "name",
+      title: "Product Name",
+      type: "string",
+      validation: (Rule) => Rule.required(),
+    }),
+    defineField({
+      name: "slug",
+      title: "Slug",
+      type: "slug",
+      options: {
+        source: "name",
+        maxLength: 96,
+      },
+      validation: (Rule) => Rule.required(),
+    }),
     defineField({
       name: "srcUrl",
       type: "image",
@@ -81,6 +81,13 @@ export default defineType({
       validation: (Rule) => Rule.required(),
     }),
     defineField({
+      name: "stock",
+      title: "Stock Quantity",
+      type: "number",
+      description: "Number of items available in stock",
+      validation: (Rule) => Rule.required().min(0),
+    }),
+    defineField({
       name: "rating",
       type: "number",
       title: "Rating",
@@ -93,11 +100,12 @@ export default defineType({
       media: "image",
       subtitle: "price",
       inStock: "inStock",
+      stock: "stock",
     },
-    prepare({ title, subtitle, media, inStock }) {
+    prepare({ title, subtitle, media, inStock, stock }) {
       return {
         title,
-        subtitle: `$${subtitle} | ${inStock ? "In Stock" : "Out of Stock"}`,
+        subtitle: `$${subtitle} | ${inStock ? `In Stock (${stock})` : "Out of Stock"}`,
         media,
       };
     },
